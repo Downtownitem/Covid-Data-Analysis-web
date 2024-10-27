@@ -1,0 +1,12 @@
+services:
+  frontend:
+    container_name: react_app
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.dev
+    stdin_open: true
+    ports:
+      - "9000:5173"
+    volumes:
+      - ./frontend/:/webapp
+      - /webapp/node_modules/

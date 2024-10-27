@@ -1,0 +1,19 @@
+FROM node:22
+
+# Enable yarn
+RUN corepack enable
+
+# Create app directory
+RUN mkdir -p /webapp
+WORKDIR /webapp
+
+# Install app dependencies
+COPY package.json /webapp
+RUN yarn install
+
+# Expose port and enable polling for hot reload
+EXPOSE 5173
+ENV CHOKIDAR_USEPOLLING=true
+
+# Start the dev server
+CMD ["yarn", "run", "dev"]

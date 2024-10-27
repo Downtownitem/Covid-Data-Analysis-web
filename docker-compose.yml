@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: dockerfile.dev
+    stdin_open: true
+    environment:
+      CHOKIDAR_USEPOLLING: true
+    ports:
+      - "1234:5173"
+    volumes:
+      - ./frontend/:/webapp
+      - /webapp/node_modules/
+
+  backend:
+    build:
+      context: ./API
+      dockerfile: dockerfile
+    stdin_open: true
+    ports:
+      - "1235:8000"
+    volumes:
+      - ./API/:/api

@@ -1,0 +1,14 @@
+pydantic
+psycopg2
+pymongo
+python-dotenv
+fastapi
+passlib[bcrypt]
+requests
+beautifulsoup4
+colorama
+selenium
+SQLAlchemy
+uvicorn
+python-multipart
+python-jose[cryptography]
