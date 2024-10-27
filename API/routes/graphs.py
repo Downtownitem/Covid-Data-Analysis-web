@@ -16,43 +16,34 @@ router = APIRouter()
 
 @router.get("/confirm_death_per_time")
 async def get_confirm_death_per_time(current_user: User = Depends(get_current_active_user)):
-    data = postgres_conn.query(DayWise)
+    data = postgres_conn.execute(text("""
+        SELECT date, country_region, confirmed
+        FROM full_grouped
+        WHERE country_region IN (SELECT country_region
+                        FROM country_wise_latest
+                        ORDER BY confirmed DESC
+                        LIMIT 12);
+    """)).all()
 
-    mapped1 = []
-    mapped2 = []
+    countries = {}
     for d in data:
-        mapped1.append({
-            "time": d.date,
-            "value": d.confirmed
-        })
-        mapped2.append({
-            "time": d.date,
-            "value": d.deaths
-        })
+        if d.country_region not in countries:
+            countries[d.country_region] = []
+        
+        countries[d.country_region].append({ "time": d.date, "value": d.confirmed })
+        
+    mapped = []
+    for country in countries.keys():
+        mapped.append({ "name": country, "data": countries[country] })
 
-    return {
-        "confirmed": mapped1,
-        "deaths": mapped2
-    }
+    return mapped
 
 
 @router.get("/confirm_death_top_country")
 async def get_confirm_death_top_country(current_user: User = Depends(get_current_active_user)):
-    top_3 = postgres_conn.execute(text("""
-        SELECT country_region, confirmed, deaths
-        FROM country_wise_lastest
-        ORDER BY deaths DESC
-        LIMIT 3;
-    """)).all()
+    top_3 = postgres_conn.execute(text("SELECT country_region, confirmed, deaths FROM country_wise_latest ORDER BY deaths DESC LIMIT 8")).all()
 
-    others = postgres_conn.execute(text("""
-        SELECT SUM(confirmed) as confirmed, SUM(deaths) as deaths
-        FROM country_wise_lastest
-        WHERE country_region NOT IN (SELECT country_region
-                                    FROM country_wise_lastest
-                                    ORDER BY deaths DESC
-                                    LIMIT 3)
-    """)).first()
+    others = postgres_conn.execute(text("SELECT SUM(confirmed) as confirmed, SUM(deaths) as deaths FROM country_wise_latest WHERE country_region NOT IN (SELECT country_region FROM country_wise_latest ORDER BY deaths DESC LIMIT 8)")).first()
 
     mapped1 = []
     mapped2 = []
@@ -60,7 +51,7 @@ async def get_confirm_death_top_country(current_user: User = Depends(get_current
     for d in top_3:
         mapped1.append({ "value": d.confirmed, "name": d.country_region })
         mapped2.append({ "value": d.deaths, "name": d.country_region })
-        
+
     mapped1.append({ "value": others.confirmed, "name": "Others" })
     mapped2.append({ "value": others.deaths, "name": "Others" })
 

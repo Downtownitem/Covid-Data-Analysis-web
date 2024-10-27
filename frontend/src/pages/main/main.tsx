@@ -10,17 +10,22 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
-import Index from "./tabs";
+import Index from "..";
 import { blurAnimationVariants } from "../../animations/variations";
+import TotalPercentage from "../totalpercentage";
+import LatitudeLongitude from "../latitudelongitud";
+import Country from "../country";
+import Territory from "../territory";
+import About from "../about";
 
 export default function Main() {
   const navigate = useNavigate();
   const [actualMenuName, setActualMenuName] = useState("Dashboard");
-  
+
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/");
-  }
+  };
 
   return (
     <>
@@ -65,7 +70,13 @@ export default function Main() {
               <p className="text-sm">Daniel Martinez</p>
               <Dropdown>
                 <DropdownTrigger>
-                  <Avatar showFallback radius="lg" size="md" src="" className="cursor-pointer" />
+                  <Avatar
+                    showFallback
+                    radius="lg"
+                    size="md"
+                    src=""
+                    className="cursor-pointer"
+                  />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Static Actions">
                   <DropdownItem
@@ -83,22 +94,28 @@ export default function Main() {
 
           <motion.section
             initial={{
-              clipPath: "circle(1px at 50% 50%)",
+              backgroundColor: "#FFFFFF",
             }}
             animate={{
-              clipPath: "circle(max(55vw, 55vh) at 50% 50%)",
-              transition: { delay: 0.5, duration: 1.5, ease: "easeInOut" },
+              backgroundColor: "#f7f8fa",
+              transition: { delay: 0.5, duration: 5, ease: "easeInOut" },
             }}
             exit={{
-              opacity: 0,
-              clipPath:
-                "circle(1px at calc(calc(100%-70px) / 2) calc(calc(100%-70px) / 2))",
+              backgroundColor: "#FFFFFF",
+              transition: { delay: 0.5, duration: 1, ease: "easeInOut" },
             }}
             className="bg-[#f7f8fa] p-5 relative"
           >
             <Routes>
-              <Route index element={<Index></Index>} />
-              <Route path="/about" element={<div>about</div>} />
+              <Route index element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/territory" element={<Territory />} />
+              <Route path="/country" element={<Country />} />
+              <Route
+                path="/latitude-longitude"
+                element={<LatitudeLongitude />}
+              />
+              <Route path="/total-percentage" element={<TotalPercentage />} />
             </Routes>
           </motion.section>
         </section>

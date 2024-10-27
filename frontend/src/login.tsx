@@ -26,7 +26,7 @@ export default function Login() {
     loginResponse
       .then((response) => {
         localStorage.setItem("token", `Bearer ${response.data.access_token}`);
-        navigate("/dashboard");
+        navigate("/initial");
       })
       .catch(() => {
         setError(true);
@@ -59,22 +59,22 @@ export default function Login() {
         {/* Exit animation */}
         <motion.div
           className="absolute w-full"
-          initial={{ opacity: 1, bottom: "auto", top: "-540px" }}
+          initial={{ opacity: 1, bottom: "auto", top: "-75vh" }}
           animate={{
             opacity: 1,
-            bottom: "-730px",
+            bottom: "-101vh",
             top: "auto",
             transition: { duration: 2, delay: 0.5, ease: [0.22, 1, 0.36, 1] },
           }}
           exit={{
             opacity: 1,
             bottom: "auto",
-            top: "-540px",
+            top: "-75vh",
             transition: { delay: 0.6, duration: 1, ease: [0.22, 1, 0.36, 1] },
           }}
         >
           <img className="w-full" src="/waves.svg" alt="Waves" />
-          <div className="bg-white w-full h-[101vh] -translate-y-1" />
+          <div className="bg-white w-full h-[101vh] -translate-y-[0.5vh]" />
         </motion.div>
 
         {/* Login */}
@@ -199,7 +199,7 @@ export default function Login() {
                 Login
               </Button>
               <Link to="/register" className="cursor-pointer text-white">
-                Still don't have an account? Register
+                Still don't have an account? Sign up
               </Link>
             </motion.div>
           </div>
