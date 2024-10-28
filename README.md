@@ -1,3 +1,7 @@
 El propósito de la página web Covid Data Analysis es presentar datos relacionados con el Covid-19 de manera visual, interactiva y accesible para facilitar la interpretación y el análisis de la información por parte del público. 
 A través de gráficos y visualizaciones dinámicas, la página busca que los usuarios puedan comprender fácilmente tendencias, patrones y cambios en los datos, lo que les permite obtener conocimientos útiles y tomar decisiones informadas.
 Además, el sitio pretende ser una herramienta intuitiva y confiable que ofrezca un acceso rápido y efectivo a grandes volúmenes de datos, empoderando a los usuarios en un contexto de información cambiante.
+
+
+COMO USAR:
+Para ejecutar el proyecto, asegúrate de tener Docker Desktop instalado. Después de la instalación, verifica que Docker Engine esté en funcionamiento; solo necesitas tener la aplicación abierta para que esté activo. Luego, clona el proyecto utilizando Git. Puedes hacerlo ejecutando git clone wiuwiuwi en una terminal dentro de la carpeta donde deseas clonar el repositorio, o bien usando GitHub Desktop si prefieres. Una vez clonado, navega a la carpeta del proyecto en la terminal hasta llegar a la carpeta llamada "main". Por ejemplo, la ruta podría ser: C:/Users/tu_usuario/Documents/RESTO DE LA RUTA, si lo clonaste en una subcarpeta dentro de "Documents". Cuando estés dentro de esta carpeta en la terminal, ejecuta docker-compose up -d. Si encuentras un error, prueba el comando sin el guion: docker compose up -d.
