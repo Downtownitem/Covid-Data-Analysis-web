@@ -1,0 +1,3 @@
+El propósito de la página web Covid Data Analysis es presentar datos relacionados con el Covid-19 de manera visual, interactiva y accesible para facilitar la interpretación y el análisis de la información por parte del público. 
+A través de gráficos y visualizaciones dinámicas, la página busca que los usuarios puedan comprender fácilmente tendencias, patrones y cambios en los datos, lo que les permite obtener conocimientos útiles y tomar decisiones informadas.
+Además, el sitio pretende ser una herramienta intuitiva y confiable que ofrezca un acceso rápido y efectivo a grandes volúmenes de datos, empoderando a los usuarios en un contexto de información cambiante.
