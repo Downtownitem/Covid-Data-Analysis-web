@@ -234,7 +234,7 @@ export default function Register() {
                 className="text-white hover:-translate-y-1 !transition-transform !duration-500 w-full"
                 isLoading={loading}
               >
-                Login
+                Sign up
               </Button>
               <Link to="/" className="cursor-pointer text-white">
                 Already have an account? Sign in

@@ -87,3 +87,16 @@ async def get_total_stats(current_user: User = Depends(get_current_active_user))
         "recovered": f"{total.recovered:,}",
         "active": f"{total.active:,}"
     }
+    
+
+@router.get("/continent_stats")
+async def get_continent_stats(current_user: User = Depends(get_current_active_user)):
+    countries = postgres_conn.query(WorldometerData).all()
+    return [{
+        "country_region": country.country_region,
+        "confirmed": country.totalcases,
+        "deaths": country.totaldeaths,
+        "recovered": country.totalrecovered,
+        "active": country.activecases,
+        "continent": country.continent
+    } for country in countries]

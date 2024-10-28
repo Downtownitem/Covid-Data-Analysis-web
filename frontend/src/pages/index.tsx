@@ -6,7 +6,7 @@ import { confirmAuth } from "../requests/auth";
 import { useNavigate } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import * as echarts from "echarts";
-import { color, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { blurAnimationVariants } from "../animations/variations";
 import Study from "./main/components/study";
 
