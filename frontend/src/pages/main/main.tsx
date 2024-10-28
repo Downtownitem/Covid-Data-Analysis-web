@@ -14,7 +14,7 @@ import Index from "..";
 import { blurAnimationVariants } from "../../animations/variations";
 import TotalPercentage from "../totalpercentage";
 import LatitudeLongitude from "../latitudelongitud";
-import Country from "../country";
+import CountryGraph from "../country";
 import Territory from "../territory";
 import About from "../about";
 
@@ -104,13 +104,13 @@ export default function Main() {
               backgroundColor: "#FFFFFF",
               transition: { delay: 0.5, duration: 1, ease: "easeInOut" },
             }}
-            className="bg-[#f7f8fa] p-5 relative"
+            className="bg-[#f7f8fa] relative"
           >
             <Routes>
               <Route index element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/territory" element={<Territory />} />
-              <Route path="/country" element={<Country />} />
+              <Route path="/country" element={<CountryGraph />} />
               <Route
                 path="/latitude-longitude"
                 element={<LatitudeLongitude />}

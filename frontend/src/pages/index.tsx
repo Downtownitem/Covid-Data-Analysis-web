@@ -6,8 +6,9 @@ import { confirmAuth } from "../requests/auth";
 import { useNavigate } from "react-router-dom";
 import { Chart, registerables } from "chart.js";
 import * as echarts from "echarts";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import { blurAnimationVariants } from "../animations/variations";
+import Study from "./main/components/study";
 
 Chart.register(...registerables);
 
@@ -16,29 +17,19 @@ export default function Index() {
   const linealChartElement = useRef<HTMLDivElement>(null);
   const pie1ChartElement = useRef<HTMLDivElement>(null);
   const pie2ChartElement = useRef<HTMLDivElement>(null);
-  const colors = ["#C81D25", "#FF5A5F", "#BFD7EA", "#087E8B", "#0B3954"];
-
-  const recuadros = [
-    {
-      title: "Cases",
-      number: "2,349,826",
-    },
-    {
-      title: "Deaths",
-      number: 1000,
-    },
-    {
-      title: "Recovered",
-      number: 1000,
-    },
-    {
-      title: "Active Cases",
-      number: 1000,
-    },
-    {
-      title: "Critical Cases",
-      number: 1000,
-    },
+  const colors = [
+    "#8A56AC", // Púrpura oscuro
+    "#A15DBE", // Violeta vibrante
+    "#B76FD0", // Lila intenso
+    "#C285D9", // Lavanda vibrante
+    "#D59EE4", // Rosa lavanda
+    "#8E307F", // Magenta oscuro
+    "#9F3D91", // Rosa fuerte
+    "#AB539B", // Rosa oscuro
+    "#D264B6", // Rosa vibrante
+    "#E07FBF", // Rosa claro contrastante
+    "#4E2A59", // Morado muy oscuro
+    "#632E7A", // Morado profundo
   ];
 
   useEffect(() => {
@@ -80,18 +71,17 @@ export default function Index() {
       },
     });
 
-    data
-      .then((res) => {
-        for (let i = 0; i < res.data.length; i++) {
-          const serie = firstChart.addLineSeries({
-            color: colors[i % colors.length],
-            lineWidth: 2,
-          });
-          serie.setData(res.data[i]["data"]);
-        }
+    data.then((res) => {
+      for (let i = 0; i < res.data.length; i++) {
+        const serie = firstChart.addLineSeries({
+          color: colors[i % colors.length],
+          lineWidth: 2,
+        });
+        serie.setData(res.data[i]["data"]);
+      }
 
-        firstChart.timeScale().fitContent();
-      });
+      firstChart.timeScale().fitContent();
+    });
 
     // Pie 2
     if (!pie1ChartElement.current) {
@@ -116,6 +106,7 @@ export default function Index() {
     dataPies
       .then((res) => {
         const data = res.data;
+        const copy_colors = colors.slice(2, data["confirmed"].length);
 
         const option1 = {
           title: {
@@ -134,6 +125,7 @@ export default function Index() {
               data: data["confirmed"],
             },
           ],
+          color: copy_colors,
         };
 
         secondChart.setOption(option1, true);
@@ -154,6 +146,7 @@ export default function Index() {
               data: data["deaths"],
             },
           ],
+          color: colors,
         };
         thirdChart.setOption(option2, true);
       })
@@ -168,56 +161,8 @@ export default function Index() {
 
   return (
     <>
-      <section className="w-full h-full flex flex-col gap-5">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          custom={0}
-          variants={blurAnimationVariants}
-          className="bg-[url('/fondo.png')] bg-no-repeat bg-cover rounded-3xl relative p-5 w-full shadow-md"
-        >
-          <div className="mb-7 mt-2">
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              custom={0.3}
-              variants={blurAnimationVariants}
-              className="font-bold text-xl"
-            >
-              Covid Analysis
-            </motion.h1>
-            <motion.span
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              variants={blurAnimationVariants}
-              custom={0.6}
-              className="font-light text-sm text-black/70"
-            >
-              All the data of a covid dataset
-            </motion.span>
-          </div>
-          <div className="flex gap-5 justify-between">
-            {recuadros.map((recuadro, index) => (
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                variants={blurAnimationVariants}
-                key={index}
-                custom={0.9 + index * 0.3}
-                className="bg-white bg-opacity-70 rounded-3xl px-4 py-6 backdrop-blur-md flex-grow shadow-md"
-              >
-                <h1 className="font-bold text-3xl">{recuadro.number}</h1>
-                <span className="font-light text-sm text-black/70">
-                  {recuadro.title}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+      <section className="w-full h-full p-5 flex flex-col gap-5">
+        <Study></Study>
         <div className="grid grid-cols-[calc(100%-50vh)_calc(50vh-20px)] grid-rows-[calc(50%-10px)_calc(50%-10px)] w-full h-full gap-5 relative">
           <motion.div
             initial="hidden"
@@ -226,8 +171,12 @@ export default function Index() {
             variants={blurAnimationVariants}
             custom={2}
             className="row-span-2 bg-white [&_svg]:hidden [&_a]:hidden p-4 rounded-3xl shadow-md relative"
-            ref={linealChartElement}
-          />
+          >
+            <h1 className="font-bold text-lg mb-4">
+              Confirmed cases in top 12 country
+            </h1>
+            <div className="w-full h-[calc(100%-16px)]" ref={linealChartElement}></div>
+          </motion.div>
           <motion.div
             initial="hidden"
             animate="visible"

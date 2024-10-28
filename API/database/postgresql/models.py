@@ -16,7 +16,7 @@ class User(base):
     hashed_password = Column(TEXT, nullable=False)
     
 class CountryWiseLatest(base):
-    __tablename__ = 'country_wise_lastest'
+    __tablename__ = 'country_wise_latest'
 
     country_region = Column(String, primary_key=True)
     confirmed = Column(INTEGER)
@@ -120,6 +120,7 @@ class WorldometerData(base):
     totaltests = Column(INTEGER)
     tests_per_1m_pop = Column(Numeric)
     who_region = Column(String)
+
 
 try:
     schemas = set(table.schema for table in base.metadata.tables.values() if table.schema)

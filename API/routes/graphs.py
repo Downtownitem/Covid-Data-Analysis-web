@@ -59,3 +59,31 @@ async def get_confirm_death_top_country(current_user: User = Depends(get_current
         "confirmed": mapped1,
         "deaths": mapped2
     }
+
+@router.get("/country_stats")
+async def get_country_stats(current_user: User = Depends(get_current_active_user)):
+    countries = postgres_conn.query(CountryWiseLatest).all()
+    return [{
+        "country_region": country.country_region,
+        "confirmed": country.confirmed,
+        "deaths": country.deaths,
+        "recovered": country.recovered,
+        "active": country.active
+    } for country in countries]
+
+
+@router.get("/total_stats")
+async def get_total_stats(current_user: User = Depends(get_current_active_user)):
+    total = postgres_conn.execute(text(
+    """
+    SELECT SUM(confirmed) as confirmed_cases, SUM(deaths) as deaths, SUM(recovered) as recovered, SUM(active) as active
+    FROM country_wise_latest;
+    """
+        )).first()
+    
+    return {
+        "confirmed": f"{total.confirmed_cases:,}",
+        "deaths": f"{total.deaths:,}",
+        "recovered": f"{total.recovered:,}",
+        "active": f"{total.active:,}"
+    }
