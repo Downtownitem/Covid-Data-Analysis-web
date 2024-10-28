@@ -100,3 +100,18 @@ async def get_continent_stats(current_user: User = Depends(get_current_active_us
         "active": country.activecases,
         "continent": country.continent
     } for country in countries]
+
+
+@router.get("/for_map")
+async def get_for_map(current_user: User = Depends(get_current_active_user)):
+    countries = postgres_conn.execute("""
+        SELECT long, lat, max(confirmed), max(deaths)
+        FROM covid_19_clean_complete
+        GROUP BY long, lat;
+    """).all()
+    
+    mapped = []
+    for country in countries:
+        mapped.append({ "lat": country.lat, "long": country.long, "confirmed": country[2], "deaths": country[3] })
+    
+    return mapped
