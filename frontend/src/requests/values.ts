@@ -1,1 +1,1 @@
-export const apiUrl = "http://localhost:1235";
+export const apiUrl = "https://covid-data-analysis-web.onrender.com";

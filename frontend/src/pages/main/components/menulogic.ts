@@ -1,18 +1,3 @@
-export const sidebarAnimation = {
-  initial: {
-    clipPath: "circle(0px at 1px calc(100vh / 2))",
-  },
-  open: {
-    clipPath: "circle(65vh at 1px calc(100vh / 2))",
-    transition: {
-      delay: 1,
-      type: "spring",
-      stiffness: 400,
-      damping: 40,
-    },
-  },
-};
-
 interface MenuCategory {
   title: string;
   items: MenuItem[];
